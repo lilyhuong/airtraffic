@@ -21,4 +21,5 @@ st.write('paired airport select', paired_airport)
 st.write('Day select', nb_days)
 st.write('Date select', forecast_date)
 
+st.image('/Users/lilyhuong/Desktop/Amse mag3/semestre 2/Forecast air traffic/airtraffic/images/LGW_AMS.png')
 # st.write(df.querry('home_airport = "{}"'.format(home_airport)).shape[0])
