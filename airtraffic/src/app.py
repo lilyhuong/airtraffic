@@ -13,7 +13,7 @@ with st.sidebar:
         'Paired Airport', Paired_airport
     )
     forecast_date = st.date_input('Forecast Start Date')
-    nb_days = st.slider("Day of forecats", 7, 40, 1)
+    nb_days = st.slider("Day of forecats", 7, 30, 1)
     run_forecast = st.button("Forecast")
 
 st.write('Home airport select', home_airport)
