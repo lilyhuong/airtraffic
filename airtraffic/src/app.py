@@ -1,18 +1,16 @@
 import streamlit as st
 import pandas as pd 
-
-import pandas as pd
 import numpy as np
 from prophet import Prophet
 from prophet.serialize import model_to_json, model_from_json
 from joblib import dump, load
 from datetime import datetime, timedelta
 import logging
-#logging.getLogger("prophet").setLevel(logging.ERROR)
 logging.getLogger("cmdstanpy").setLevel(logging.ERROR)
 import os
+import matplotlib.pyplot as plt
 
-from predict_model import (generate_route_df, predict)
+from predict_model import (generate_route_df, predict_prophet, plot_result)
 
 
 st.title('Traffic Forecast')
@@ -20,7 +18,6 @@ Home_airport = ('LGW', 'LIS', "LYS", "NTE", "PNH", "POP", "SCL", "SSA")
 #Paired_airport = ('FUE', 'AMS')
 
 # Define the options for the second select box based on the selected value of the first select box
-# df = pd.read
 with st.sidebar:
     home_airport = st.selectbox(
         'Home Airport', Home_airport
@@ -47,14 +44,18 @@ with st.sidebar:
         'Paired Airport', Paired_airport
     )
     
+    # procedure set up minimum date pour éviter la prédiction avec dataframe vide
+    traffic_df = pd.read_parquet("/Users/lilyhuong/Desktop/Amse mag3/semestre 2/Forecast air traffic/airtraffic/traffic_10lines.parquet")
+    data_date = generate_route_df(traffic_df, home_airport, paired_airport)
+    min_date = data_date["date"][0]  #set up the minimum date that user can select 
+    forecast_date = st.date_input('Forecast Start Date', min_value = min_date)
     
-    forecast_date = st.date_input('Forecast Start Date')
     nb_days = st.slider("Day of forecats", 7, 30, 1)
     run_forecast = st.button("Forecast")
 
 st.write('Home airport select', home_airport)
 st.write('paired airport select', paired_airport)
-st.write('Day select', nb_days)
+st.write('Day of forecats', nb_days)
 st.write('Date select', forecast_date)
 
 # Display the image using Streamlit
@@ -64,10 +65,12 @@ st.image(file_img)
 
 #display forecast 
 if run_forecast:
-    table = predict(home_airport, paired_airport, forecast_date, nb_days)
-    st.dataframe(table)
-
-
+    st.write('Result of prediction')
+    table = predict_prophet(home_airport, paired_airport, forecast_date, nb_days)
+    st.dataframe(table.head(10))
+    
+    img_pred = plot_result(table)
+    st.pyplot(img_pred)
 # st.dataframe(table)
 
 # st.write(df.querry('home_airport = "{}"'.format(home_airport)).shape[0])
