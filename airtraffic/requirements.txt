@@ -1,5 +1,5 @@
 # local package
--e .
+
 
 # external requirements (to be updated)
 #click
@@ -10,3 +10,8 @@
 #python-dotenv>=0.5.1
 streamlit
 -U kaleido
+prophet-1.1.4
+lightgbm-3.3.5
+scikit-learn-1.2.2
+xgboost-1.7.5
+mlforecast-0.7.3
