@@ -10,7 +10,14 @@ logging.getLogger("cmdstanpy").setLevel(logging.ERROR)
 import os
 import matplotlib.pyplot as plt
 
-from predict_model import (generate_route_df, predict_prophet, plot_result)
+import xgboost as xgb
+from sklearn.ensemble import RandomForestRegressor
+
+from mlforecast import MLForecast
+from numba import njit
+from window_ops.expanding import expanding_mean
+from window_ops.rolling import rolling_mean
+from predict_model import (generate_route_df, predict_prophet, plot_result, rolling_mean_28, predict_Nixtla, plot_nixtla)
 
 
 st.title('Traffic Forecast')
@@ -64,14 +71,24 @@ file_img = link_image + home_airport + "_" + paired_airport + ".png"
 st.image(file_img)
 
 #display forecast 
-if run_forecast:
-    st.write('Result of prediction')
-    table = predict_prophet(home_airport, paired_airport, forecast_date, nb_days)
-    st.dataframe(table.head(10))
+
+input_method = st.radio("Select a predictive method", ('Prophet', 'Nixtla'))
+if input_method == 'Prophet':
+    if run_forecast:
+        st.write('Result of prediction')
+        table = predict_prophet(home_airport, paired_airport, forecast_date, nb_days)
+        st.dataframe(table)
     
-    img_pred = plot_result(table)
-    st.pyplot(img_pred)
-# st.dataframe(table)
+        img_pred = plot_result(table)
+        st.pyplot(img_pred)
+if input_method == 'Nixtla':
+    if run_forecast:
+        st.write('Result of prediction')
+        table = predict_Nixtla(home_airport, paired_airport, forecast_date, nb_days)
+        st.dataframe(table)
+        img_nitxla = plot_nixtla(home_airport, paired_airport, forecast_date)
+        st.pyplot(img_nitxla)
+
 
 
 # st.write(df.querry('home_airport = "{}"'.format(home_airport)).shape[0])

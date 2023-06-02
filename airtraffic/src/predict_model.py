@@ -11,7 +11,6 @@ import os
 import streamlit as st
 import matplotlib.pyplot as plt
 
-import lightgbm as lgb
 import xgboost as xgb
 from sklearn.ensemble import RandomForestRegressor
 
@@ -93,7 +92,7 @@ def rolling_mean_28(x):
     return rolling_mean(x, window_size=28)
 
 def predict_Nixtla(home_airport, paire_airport, forecast_day, nb):
-    
+    global nixtla_model
     traffic_df = pd.read_parquet("/Users/lilyhuong/Desktop/Amse mag3/semestre 2/Forecast air traffic/airtraffic/traffic_10lines.parquet")
     df1 = generate_route_df(traffic_df, home_airport, paire_airport)
     
@@ -105,7 +104,6 @@ def predict_Nixtla(home_airport, paire_airport, forecast_day, nb):
            
     # parametre le modele    
     models = [
-    lgb.LGBMRegressor(),
     xgb.XGBRegressor(),
     RandomForestRegressor(random_state=0),
     ]
@@ -125,4 +123,29 @@ def predict_Nixtla(home_airport, paire_airport, forecast_day, nb):
     df1 = df1[df1.date <= pd.to_datetime(forecast_day)]
     nixtla_model = fcst.fit(df1.drop(columns = ['paired_airport']),id_col = 'home_airport', time_col= 'date', target_col= 'pax_total')
     predict_df = (nixtla_model.predict(nb)).drop(columns = ['home_airport'])
-    predict_df
+    return predict_df
+def plot_nixtla(home_airport, paire_airport, forecast_day):
+    traffic_df = pd.read_parquet("/Users/lilyhuong/Desktop/Amse mag3/semestre 2/Forecast air traffic/airtraffic/traffic_10lines.parquet")
+    df1 = generate_route_df(traffic_df, home_airport, paire_airport)
+    df1 = df1[df1.date <= pd.to_datetime(forecast_day)]
+    # Generate the route DataFrame using generate_route_df() function
+    route_df = df1.drop(columns=['paired_airport'])
+
+    # Get the predictions using nixtla_model.predict()
+    predictions = nixtla_model.predict(7 * 10)
+
+    # Concatenate the DataFrames
+    concatenated_df = pd.concat([route_df, predictions]).set_index('date')
+
+    # Create the figure and axes
+    fig, ax = plt.subplots(figsize=(15, 7))
+
+    # Plot the concatenated DataFrame
+    concatenated_df.plot(ax=ax)
+
+    ax.set_title('Result of prediction')
+    ax.set_xlabel('Date')
+    ax.set_ylabel('Number of passengers')
+    plt.show()
+    return plt
+    
