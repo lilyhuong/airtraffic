@@ -60,9 +60,37 @@ Project Organization
     │   │
     │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
     │       └── visualize.py
+    │   │____app.py       <- Scripts to use steamlit app 
     │
     └── tox.ini            <- tox file with settings for running tox; see tox.testrun.org
 
+
+This is a tool that predict the number of passengers of some airports. It's built with Python and Streamlit and leverages the langchain library . 
+
+Features
+
+Take the numbers of predictive day from 1 to 30
+Can choose between 2 methods to have the better prediction
+
+Usage
+Launch the Streamlit app by running streamlit run app.py
+Select the home airport and paired airport
+Choose the date of starting for prediction
+Select the number of days in prediction
+Select the method of prediction: by prophet or by Nixtla
+Click the "Forecast" button and wait for the result.
+
+Modules
+app.py: Streamlit app main file
+predict_model.py: Contains utility functions for generate_route_df, predict_prophet, plot_result, rolling_mean_28, predict_Nixtla, plot_nixtla for the Streamlit app
+test.ipynb: the process of finding the best model 
+
+Main Functions
+generate_route_df(): Extract route datafrae from traffic dataframe for route from home airport to paired airport
+predict_prophet(): get the prediction result by prophet
+plot_result(): plot the result by prophet
+predict_Nixtla(): predict the result by Nixtla
+plot_nixtla(): plot the result by Nixtla 
 
 --------
 
