@@ -73,4 +73,5 @@ if run_forecast:
     st.pyplot(img_pred)
 # st.dataframe(table)
 
+
 # st.write(df.querry('home_airport = "{}"'.format(home_airport)).shape[0])

@@ -97,11 +97,11 @@ def predict_Nixtla(home_airport, paire_airport, forecast_day, nb):
     traffic_df = pd.read_parquet("/Users/lilyhuong/Desktop/Amse mag3/semestre 2/Forecast air traffic/airtraffic/traffic_10lines.parquet")
     df1 = generate_route_df(traffic_df, home_airport, paire_airport)
     
-    nextday = forecast_day + timedelta(days = nb)
-    if nextday > df1["date"].iloc[-1]:
-        nb_forecast = (nextday - df1["date"].iloc[-1].to_pydatetime().date()).days
-    else:
-        nb_forecast = 15
+    # nextday = forecast_day + timedelta(days = nb)
+    # if nextday > df1["date"].iloc[-1]:
+    #     nb_forecast = (nextday - df1["date"].iloc[-1].to_pydatetime().date()).days
+    # else:
+    #     nb_forecast = 15
            
     # parametre le modele    
     models = [
@@ -121,3 +121,8 @@ def predict_Nixtla(home_airport, paire_airport, forecast_day, nb):
         date_features=['dayofweek'],
         differences=[1],
     )
+    #selectionner seulement le dataframe avec la date < la date selectionner pour faire la prédiction 
+    df1 = df1[df1.date <= pd.to_datetime(forecast_day)]
+    nixtla_model = fcst.fit(df1.drop(columns = ['paired_airport']),id_col = 'home_airport', time_col= 'date', target_col= 'pax_total')
+    predict_df = (nixtla_model.predict(nb)).drop(columns = ['home_airport'])
+    predict_df
