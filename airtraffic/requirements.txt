@@ -15,4 +15,4 @@
 # scikit-learn
 # xgboost
 # mlforecast
-# /Users/lilyhuong/Desktop/Amse mag3/semestre 2/Forecast air traffic/airtraffic/traffic_10lines.parquet
+/Users/lilyhuong/Desktop/Amse mag3/semestre 2/Forecast air traffic/airtraffic/traffic_10lines.parquet
