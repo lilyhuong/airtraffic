@@ -13,7 +13,7 @@ import os
 # import xgboost as xgb
 # from sklearn.ensemble import RandomForestRegressor
 
-from mlforecast import MLForecast
+# from mlforecast import MLForecast
 from numba import njit
 from window_ops.expanding import expanding_mean
 from window_ops.rolling import rolling_mean
