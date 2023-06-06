@@ -14,7 +14,7 @@ import os
 # from sklearn.ensemble import RandomForestRegressor
 
 # from mlforecast import MLForecast
-from numba import njit
+# from numba import njit
 from window_ops.expanding import expanding_mean
 from window_ops.rolling import rolling_mean
 from predict_model import (generate_route_df, predict_prophet, plot_result, rolling_mean_28, predict_Nixtla, plot_nixtla)
