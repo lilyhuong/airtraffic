@@ -195,3 +195,4 @@ xgboost==1.7.5
 yarl==1.9.2
 ydata-profiling==4.2.0
 zipp==3.15.0
+/Users/lilyhuong/Desktop/Amse mag3/semestre 2/Forecast air traffic/airtraffic/traffic_10lines.parquet
