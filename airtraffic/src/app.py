@@ -56,7 +56,7 @@ with st.sidebar:
     )
     
     # procedure set up minimum date pour éviter la prédiction avec dataframe vide
-    traffic_df = pd.read_parquet("traffic_10lines.parquet")
+    traffic_df = pd.read_parquet("airtraffic/traffic_10lines.parquet")
     st.dataframe(traffic_df)
     data_date = generate_route_df(traffic_df, home_airport, paired_airport)
     min_date = data_date["date"][0]  #set up the minimum date that user can select 
