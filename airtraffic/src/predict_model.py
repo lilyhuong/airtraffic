@@ -53,7 +53,7 @@ def predict_prophet(home_airport, paire_airport, forecast_day, nb):
         
         
     #predict model
-    _filename = '/Users/lilyhuong/Desktop/Amse mag3/semestre 2/Forecast air traffic/airtraffic/notebooks/route_model_prophet_{home}_{paired}.json'.format(home = home_airport, paired = paire_airport)
+    _filename = 'airtraffic/notebooks/route_model_prophet_{home}_{paired}.json'.format(home = home_airport, paired = paire_airport)
     a = load(_filename)
         
     #prepare prediction for next X days 
@@ -93,7 +93,7 @@ def rolling_mean_28(x):
 
 def predict_Nixtla(home_airport, paire_airport, forecast_day, nb):
     global nixtla_model
-    traffic_df = pd.read_parquet("/Users/lilyhuong/Desktop/Amse mag3/semestre 2/Forecast air traffic/airtraffic/traffic_10lines.parquet")
+    traffic_df = pd.read_parquet("airtraffic/traffic_10lines.parquet")
     df1 = generate_route_df(traffic_df, home_airport, paire_airport)
     
     # nextday = forecast_day + timedelta(days = nb)
@@ -125,7 +125,7 @@ def predict_Nixtla(home_airport, paire_airport, forecast_day, nb):
     predict_df = (nixtla_model.predict(nb)).drop(columns = ['home_airport'])
     return predict_df
 def plot_nixtla(home_airport, paire_airport, forecast_day):
-    traffic_df = pd.read_parquet("/Users/lilyhuong/Desktop/Amse mag3/semestre 2/Forecast air traffic/airtraffic/traffic_10lines.parquet")
+    traffic_df = pd.read_parquet("airtraffic/traffic_10lines.parquet")
     df1 = generate_route_df(traffic_df, home_airport, paire_airport)
     df1 = df1[df1.date <= pd.to_datetime(forecast_day)]
     # Generate the route DataFrame using generate_route_df() function
