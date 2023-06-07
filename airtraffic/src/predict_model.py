@@ -42,7 +42,7 @@ def generate_route_df(traffic_df: pd.DataFrame, homeAirport:str, paireAirport: s
 
 def predict_prophet(home_airport, paire_airport, forecast_day, nb):
     
-    traffic_df = pd.read_parquet("/Users/lilyhuong/Desktop/Amse mag3/semestre 2/Forecast air traffic/airtraffic/traffic_10lines.parquet")
+    traffic_df = pd.read_parquet("airtraffic/traffic_10lines.parquet")
     df1 = generate_route_df(traffic_df, home_airport, paire_airport)
     
     nextday = forecast_day + timedelta(days = nb)
