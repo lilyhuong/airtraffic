@@ -71,7 +71,7 @@ st.write('Day of forecats', nb_days)
 st.write('Date select', forecast_date)
 
 # Display the image using Streamlit
-link_image = "/Users/lilyhuong/Desktop/Amse mag3/semestre 2/Forecast air traffic/airtraffic/images/"
+link_image = "airtraffic/images"
 file_img = link_image + home_airport + "_" + paired_airport + ".png"
 st.image(file_img)
 
