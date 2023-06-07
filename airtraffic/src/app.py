@@ -57,7 +57,6 @@ with st.sidebar:
     
     # procedure set up minimum date pour éviter la prédiction avec dataframe vide
     traffic_df = pd.read_parquet("airtraffic/traffic_10lines.parquet")
-    st.dataframe(traffic_df)
     data_date = generate_route_df(traffic_df, home_airport, paired_airport)
     min_date = data_date["date"][0]  #set up the minimum date that user can select 
     forecast_date = st.date_input('Forecast Start Date', min_value = min_date)
@@ -71,7 +70,7 @@ st.write('Day of forecats', nb_days)
 st.write('Date select', forecast_date)
 
 # Display the image using Streamlit
-link_image = "airtraffic/images"
+link_image = "airtraffic/images/"
 file_img = link_image + home_airport + "_" + paired_airport + ".png"
 st.image(file_img)
 
